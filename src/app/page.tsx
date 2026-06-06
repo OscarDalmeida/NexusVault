@@ -2,6 +2,92 @@ import Link from "next/link";
 import { db } from "@/lib/db";
 import { CATEGORIES } from "@/lib/categories";
 import ListingGrid from "@/components/listings/listing-grid";
+import {
+  AIPromptsIcon,
+  ClaudeSkillsIcon,
+  TemplatesIcon,
+  CoursesIcon,
+  DesignIcon,
+  CodeIcon,
+  SpreadsheetIcon,
+  EbooksIcon,
+} from "@/components/ui/category-icons";
+
+const FEATURED_CATEGORIES = [
+  {
+    slug: "ai-tools-prompts",
+    name: "AI Prompts",
+    description: "ChatGPT & Claude prompts, agent configs, automation workflows",
+    icon: AIPromptsIcon,
+    gradient: "from-violet-500/20 to-fuchsia-500/20",
+    border: "hover:border-violet-500/50",
+    glow: "group-hover:shadow-violet-500/20",
+  },
+  {
+    slug: "ai-tools-prompts",
+    name: "Claude Skills",
+    description: "Custom Claude system prompts, specialized assistants & tools",
+    icon: ClaudeSkillsIcon,
+    gradient: "from-amber-500/20 to-orange-500/20",
+    border: "hover:border-amber-500/50",
+    glow: "group-hover:shadow-amber-500/20",
+    search: "claude",
+  },
+  {
+    slug: "spreadsheet-templates",
+    name: "Spreadsheets",
+    description: "Excel & Sheets financial models, trackers, dashboards",
+    icon: SpreadsheetIcon,
+    gradient: "from-green-500/20 to-emerald-500/20",
+    border: "hover:border-green-500/50",
+    glow: "group-hover:shadow-green-500/20",
+  },
+  {
+    slug: "design-assets",
+    name: "Design Assets",
+    description: "UI kits, Figma components, icon packs, mockups",
+    icon: DesignIcon,
+    gradient: "from-pink-500/20 to-violet-500/20",
+    border: "hover:border-pink-500/50",
+    glow: "group-hover:shadow-pink-500/20",
+  },
+  {
+    slug: "courses-tutorials",
+    name: "Courses",
+    description: "Video lessons, structured modules, workshop recordings",
+    icon: CoursesIcon,
+    gradient: "from-blue-500/20 to-cyan-500/20",
+    border: "hover:border-blue-500/50",
+    glow: "group-hover:shadow-blue-500/20",
+  },
+  {
+    slug: "code-dev-tools",
+    name: "Code & Dev",
+    description: "Scripts, boilerplates, SaaS starter kits, APIs",
+    icon: CodeIcon,
+    gradient: "from-cyan-500/20 to-teal-500/20",
+    border: "hover:border-cyan-500/50",
+    glow: "group-hover:shadow-cyan-500/20",
+  },
+  {
+    slug: "presentation-templates",
+    name: "Templates",
+    description: "Slides, documents, Notion dashboards, printables",
+    icon: TemplatesIcon,
+    gradient: "from-emerald-500/20 to-green-500/20",
+    border: "hover:border-emerald-500/50",
+    glow: "group-hover:shadow-emerald-500/20",
+  },
+  {
+    slug: "ebooks-guides",
+    name: "eBooks & Guides",
+    description: "PDFs, how-to guides, research reports, playbooks",
+    icon: EbooksIcon,
+    gradient: "from-orange-500/20 to-amber-500/20",
+    border: "hover:border-orange-500/50",
+    glow: "group-hover:shadow-orange-500/20",
+  },
+];
 
 async function getFeaturedListings() {
   try {
@@ -38,22 +124,27 @@ export default async function HomePage() {
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-violet-500/10 via-transparent to-transparent" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-violet-900/20 via-transparent to-transparent" />
+        {/* Floating orbs */}
+        <div className="absolute top-20 left-10 h-72 w-72 rounded-full bg-violet-500/5 blur-3xl" />
+        <div className="absolute top-40 right-10 h-72 w-72 rounded-full bg-fuchsia-500/5 blur-3xl" />
         <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
-            <h1 className="text-4xl font-bold tracking-tight sm:text-6xl lg:text-7xl">
-              <span className="bg-gradient-to-r from-white via-zinc-200 to-zinc-400 bg-clip-text text-transparent">
-                Premium Digital
-              </span>
-              <br />
-              <span className="bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">
-                Products
-              </span>
-            </h1>
-            <p className="mt-6 text-lg text-zinc-400 sm:text-xl">
+            <div className="animate-page-up">
+              <h1 className="text-4xl font-bold tracking-tight sm:text-6xl lg:text-7xl">
+                <span className="bg-gradient-to-r from-white via-zinc-200 to-zinc-400 bg-clip-text text-transparent">
+                  Premium Digital
+                </span>
+                <br />
+                <span className="bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">
+                  Products
+                </span>
+              </h1>
+            </div>
+            <p className="mt-6 text-lg text-zinc-400 sm:text-xl animate-page-up" style={{ animationDelay: "0.1s" }}>
               Discover thousands of digital products from creators worldwide. Templates, tools, courses, and more — delivered instantly.
             </p>
-            <div className="mt-8">
-              <form action="/browse" method="get" className="mx-auto flex max-w-xl overflow-hidden rounded-xl border border-white/10 bg-zinc-900 focus-within:border-violet-500/50 focus-within:ring-1 focus-within:ring-violet-500/50">
+            <div className="mt-8 animate-page-up" style={{ animationDelay: "0.2s" }}>
+              <form action="/browse" method="get" className="mx-auto flex max-w-xl overflow-hidden rounded-xl border border-white/10 bg-zinc-900 focus-within:border-violet-500/50 focus-within:ring-1 focus-within:ring-violet-500/50 transition-all duration-300">
                 <input
                   type="text"
                   name="search"
@@ -68,13 +159,13 @@ export default async function HomePage() {
                 </button>
               </form>
             </div>
-            <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-2 animate-page-up" style={{ animationDelay: "0.3s" }}>
               <span className="text-xs text-zinc-600">Popular:</span>
               {["AI Prompts", "Notion Templates", "UI Kits", "Courses"].map((tag) => (
                 <Link
                   key={tag}
                   href={`/browse?search=${encodeURIComponent(tag)}`}
-                  className="rounded-full border border-white/10 px-3 py-1 text-xs text-zinc-400 transition hover:border-violet-500/50 hover:text-violet-400"
+                  className="rounded-full border border-white/10 px-3 py-1 text-xs text-zinc-400 transition-all duration-300 hover:border-violet-500/50 hover:text-violet-400 hover:bg-violet-500/5"
                 >
                   {tag}
                 </Link>
@@ -84,20 +175,59 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Categories */}
+      {/* Featured Category Icons */}
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <h2 className="mb-8 text-2xl font-bold text-white">Browse Categories</h2>
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+        <div className="text-center mb-10 animate-page-up" style={{ animationDelay: "0.15s" }}>
+          <h2 className="text-2xl font-bold text-white sm:text-3xl">Explore the Marketplace</h2>
+          <p className="mt-2 text-zinc-400">Find exactly what you need across every category</p>
+        </div>
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 stagger-children">
+          {FEATURED_CATEGORIES.map((cat) => {
+            const IconComponent = cat.icon;
+            const href = cat.search
+              ? `/browse?category=${cat.slug}&search=${cat.search}`
+              : `/browse/${cat.slug}`;
+            return (
+              <Link
+                key={cat.name}
+                href={href}
+                className={`group relative flex flex-col items-center gap-3 rounded-2xl border border-white/10 bg-gradient-to-br ${cat.gradient} p-6 transition-all duration-300 ${cat.border} hover:shadow-lg ${cat.glow} hover:scale-[1.02] hover:-translate-y-1`}
+              >
+                <div className="rounded-xl bg-white/5 p-3 transition-transform duration-300 group-hover:scale-110">
+                  <IconComponent className="h-10 w-10" />
+                </div>
+                <div className="text-center">
+                  <span className="block text-sm font-semibold text-white group-hover:text-white transition-colors">
+                    {cat.name}
+                  </span>
+                  <span className="mt-1 block text-xs text-zinc-500 group-hover:text-zinc-400 transition-colors line-clamp-2">
+                    {cat.description}
+                  </span>
+                </div>
+                {/* Hover arrow */}
+                <div className="absolute right-3 top-3 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0 -translate-x-1">
+                  <svg className="h-4 w-4 text-zinc-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* All Categories (compact) */}
+      <section className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8">
+        <h3 className="mb-4 text-sm font-medium text-zinc-500 uppercase tracking-wider">All Categories</h3>
+        <div className="flex flex-wrap gap-2">
           {CATEGORIES.map((cat) => (
             <Link
               key={cat.slug}
               href={`/browse/${cat.slug}`}
-              className="group flex items-center gap-3 rounded-xl border border-white/10 bg-zinc-900/50 p-4 transition-all hover:border-violet-500/50 hover:bg-zinc-900"
+              className="flex items-center gap-2 rounded-full border border-white/10 bg-zinc-900/50 px-4 py-2 text-xs text-zinc-400 transition-all duration-300 hover:border-violet-500/40 hover:text-white hover:bg-zinc-800/80"
             >
-              <span className="text-2xl">{cat.icon}</span>
-              <span className="text-sm font-medium text-zinc-300 group-hover:text-white line-clamp-2">
-                {cat.name}
-              </span>
+              <span>{cat.icon}</span>
+              <span>{cat.name}</span>
             </Link>
           ))}
         </div>
@@ -108,7 +238,7 @@ export default async function HomePage() {
         <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
           <div className="mb-8 flex items-center justify-between">
             <h2 className="text-2xl font-bold text-white">Best Sellers</h2>
-            <Link href="/browse?sort=best-selling" className="text-sm text-violet-400 hover:text-violet-300">
+            <Link href="/browse?sort=best-selling" className="text-sm text-violet-400 hover:text-violet-300 transition-colors">
               View all →
             </Link>
           </div>
@@ -121,7 +251,7 @@ export default async function HomePage() {
         <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
           <div className="mb-8 flex items-center justify-between">
             <h2 className="text-2xl font-bold text-white">Recently Added</h2>
-            <Link href="/browse?sort=newest" className="text-sm text-violet-400 hover:text-violet-300">
+            <Link href="/browse?sort=newest" className="text-sm text-violet-400 hover:text-violet-300 transition-colors">
               View all →
             </Link>
           </div>
@@ -132,6 +262,7 @@ export default async function HomePage() {
       {/* CTA */}
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-violet-900/30 to-fuchsia-900/30 p-8 sm:p-12">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,_var(--tw-gradient-stops))] from-violet-500/10 via-transparent to-transparent" />
           <div className="relative">
             <h2 className="text-3xl font-bold text-white sm:text-4xl">Start Selling Today</h2>
             <p className="mt-3 max-w-xl text-zinc-400">
@@ -139,7 +270,7 @@ export default async function HomePage() {
             </p>
             <Link
               href="/auth/signup"
-              className="mt-6 inline-flex rounded-lg bg-violet-600 px-6 py-3 text-sm font-medium text-white transition hover:bg-violet-500"
+              className="mt-6 inline-flex rounded-lg bg-violet-600 px-6 py-3 text-sm font-medium text-white transition-all duration-300 hover:bg-violet-500 hover:shadow-lg hover:shadow-violet-500/25"
             >
               Create Your Store →
             </Link>

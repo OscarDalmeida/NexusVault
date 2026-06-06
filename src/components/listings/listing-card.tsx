@@ -23,7 +23,7 @@ interface ListingCardProps {
 export default function ListingCard({ listing }: ListingCardProps) {
   return (
     <Link href={`/product/${listing.slug}`} className="group">
-      <div className="overflow-hidden rounded-xl border border-white/10 bg-zinc-900/50 transition-all duration-300 hover:border-violet-500/50 hover:shadow-lg hover:shadow-violet-500/5">
+      <div className="overflow-hidden rounded-xl border border-white/10 bg-zinc-900/50 transition-all duration-300 hover:border-violet-500/50 hover:shadow-lg hover:shadow-violet-500/10 hover:scale-[1.02] hover:-translate-y-1">
         <div className="relative aspect-[16/10] overflow-hidden bg-zinc-800">
           {listing.thumbnailUrl ? (
             <img
