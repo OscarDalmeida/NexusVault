@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { getAuth } from "@/lib/auth";
-import { getDownloadUrl } from "@/lib/s3";
 
 export async function GET(req: Request, { params }: { params: Promise<{ orderId: string }> }) {
   const session = await getAuth();
@@ -31,9 +30,17 @@ export async function GET(req: Request, { params }: { params: Promise<{ orderId:
   const deliveries = await Promise.all(
     order.deliveries.map(async (d) => {
       let resolvedValue = d.resolvedValue;
+
+      // For FILE type, try to generate a fresh signed download URL
       if (d.deliveryItem.type === "FILE") {
-        resolvedValue = await getDownloadUrl(d.deliveryItem.value);
+        try {
+          const { getDownloadUrl } = await import("@/lib/s3");
+          resolvedValue = await getDownloadUrl(d.deliveryItem.value);
+        } catch {
+          // S3 not configured — use the stored value as-is
+        }
       }
+
       return {
         id: d.id,
         type: d.deliveryItem.type,

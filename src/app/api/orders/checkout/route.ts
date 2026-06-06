@@ -57,7 +57,8 @@ export async function POST(req: Request) {
           product_data: {
             name: listing.title,
             description: listing.shortDesc,
-            ...(listing.thumbnailUrl ? { images: [listing.thumbnailUrl] } : {}),
+            // Only pass real URLs to Stripe (not data URIs from generated icons)
+            ...(listing.thumbnailUrl && listing.thumbnailUrl.startsWith("http") ? { images: [listing.thumbnailUrl] } : {}),
           },
           unit_amount: unitAmount,
         },

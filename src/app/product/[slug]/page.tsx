@@ -5,7 +5,6 @@ import { db } from "@/lib/db";
 import { getCategoryName } from "@/lib/categories";
 import { formatPrice, formatDate } from "@/lib/utils";
 import ProductActions from "./product-actions";
-import FaqAccordion from "./faq-accordion";
 
 interface Props {
   params: Promise<{ slug: string }>;
