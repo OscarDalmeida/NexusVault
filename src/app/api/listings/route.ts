@@ -3,6 +3,7 @@ import slugify from "slugify";
 import { db } from "@/lib/db";
 import { getAuth } from "@/lib/auth";
 import { listingSchema } from "@/lib/validations";
+import { generateProductIconUrl } from "@/lib/icon-generator";
 
 export async function GET(req: Request) {
   const url = new URL(req.url);
@@ -76,10 +77,18 @@ export async function POST(req: Request) {
     const existing = await db.listing.findUnique({ where: { slug } });
     if (existing) slug += "-" + Math.random().toString(36).slice(2, 6);
 
+    // Auto-generate unique product icon
+    const thumbnailUrl = generateProductIconUrl(
+      listingData.title,
+      listingData.shortDesc || listingData.description || "",
+      listingData.category
+    );
+
     const listing = await db.listing.create({
       data: {
         ...listingData,
         slug,
+        thumbnailUrl,
         sellerId: session.user.id,
         deliveryItems: {
           create: deliveryItems.map((item) => ({

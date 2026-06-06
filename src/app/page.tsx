@@ -175,6 +175,28 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* Social Proof Stats Bar */}
+      <section className="border-y border-white/10 bg-zinc-900/40">
+        <div className="mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+            {[
+              { value: "10,000+", label: "Products", icon: "📦" },
+              { value: "5,000+", label: "Creators", icon: "🎨" },
+              { value: "50,000+", label: "Happy Buyers", icon: "⭐" },
+              { value: "4.8/5", label: "Avg Rating", icon: "🏆" },
+            ].map((stat) => (
+              <div key={stat.label} className="flex items-center justify-center gap-3">
+                <span className="text-2xl">{stat.icon}</span>
+                <div>
+                  <div className="text-lg font-bold text-white">{stat.value}</div>
+                  <div className="text-xs text-zinc-500">{stat.label}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Featured Category Icons */}
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="text-center mb-10 animate-page-up" style={{ animationDelay: "0.15s" }}>
@@ -237,7 +259,16 @@ export default async function HomePage() {
       {featured.length > 0 && (
         <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
           <div className="mb-8 flex items-center justify-between">
-            <h2 className="text-2xl font-bold text-white">Best Sellers</h2>
+            <div className="flex items-center gap-3">
+              <h2 className="text-2xl font-bold text-white">Trending This Week</h2>
+              <span className="flex items-center gap-1 rounded-full bg-rose-500/20 border border-rose-500/30 px-2.5 py-0.5 text-xs font-semibold text-rose-400">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-rose-500"></span>
+                </span>
+                Hot
+              </span>
+            </div>
             <Link href="/browse?sort=best-selling" className="text-sm text-violet-400 hover:text-violet-300 transition-colors">
               View all →
             </Link>
@@ -258,6 +289,49 @@ export default async function HomePage() {
           <ListingGrid listings={recent} />
         </section>
       )}
+
+      {/* Trust Signals Bar */}
+      <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+          {[
+            {
+              icon: (
+                <svg className="h-6 w-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              ),
+              title: "Instant Download",
+              desc: "Access your files immediately after purchase. No waiting, no shipping.",
+            },
+            {
+              icon: (
+                <svg className="h-6 w-6 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+              ),
+              title: "Money-Back Guarantee",
+              desc: "Not happy? We offer a 30-day refund on all purchases, no questions asked.",
+            },
+            {
+              icon: (
+                <svg className="h-6 w-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+              ),
+              title: "Secure Payments",
+              desc: "256-bit SSL encryption. Your payment info is never stored on our servers.",
+            },
+          ].map((item) => (
+            <div key={item.title} className="flex items-start gap-4 rounded-xl border border-white/10 bg-zinc-900/50 p-5">
+              <div className="shrink-0 rounded-lg bg-zinc-800 p-2">{item.icon}</div>
+              <div>
+                <div className="text-sm font-semibold text-white">{item.title}</div>
+                <div className="mt-1 text-xs text-zinc-500">{item.desc}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
 
       {/* CTA */}
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">

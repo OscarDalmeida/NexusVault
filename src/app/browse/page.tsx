@@ -72,12 +72,40 @@ function BrowsePage() {
         <p className="mt-1 text-zinc-400">
           {total > 0 ? `${total} products found` : "Explore our marketplace"}
         </p>
+        {/* Active filter chips */}
+        {(search || category) && (
+          <div className="mt-3 flex flex-wrap items-center gap-2">
+            <span className="text-xs text-zinc-600">Active filters:</span>
+            {search && (
+              <button
+                onClick={() => updateParam("search", "")}
+                className="flex items-center gap-1 rounded-full border border-violet-500/30 bg-violet-500/10 px-3 py-1 text-xs text-violet-400 hover:bg-violet-500/20 transition-all"
+              >
+                Search: {search}
+                <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            )}
+            {category && (
+              <button
+                onClick={() => updateParam("category", "")}
+                className="flex items-center gap-1 rounded-full border border-violet-500/30 bg-violet-500/10 px-3 py-1 text-xs text-violet-400 hover:bg-violet-500/20 transition-all"
+              >
+                {CATEGORIES.find(c => c.slug === category)?.name ?? category}
+                <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            )}
+          </div>
+        )}
       </div>
 
       <div className="flex flex-col gap-6 lg:flex-row">
         {/* Filters Sidebar */}
         <div className="w-full shrink-0 lg:w-64">
-          <div className="space-y-6 rounded-xl border border-white/10 bg-zinc-900/50 p-5">
+          <div className="sticky top-24 space-y-6 rounded-xl border border-white/10 bg-zinc-900/50 p-5">
             <div>
               <label className="mb-2 block text-sm font-medium text-zinc-300">Search</label>
               <input
@@ -136,6 +164,33 @@ function BrowsePage() {
                   </div>
                 </div>
               ))}
+            </div>
+          ) : listings.length === 0 ? (
+            <div className="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-zinc-900/30 py-20 text-center">
+              <div className="mb-4 text-5xl">🔍</div>
+              <h3 className="text-lg font-semibold text-white">No products found</h3>
+              <p className="mt-2 max-w-sm text-sm text-zinc-500">
+                {search
+                  ? `We couldn't find anything matching "${search}". Try a different search term or browse a category.`
+                  : "No products in this category yet. Try exploring other categories."}
+              </p>
+              <div className="mt-6 flex flex-wrap justify-center gap-2">
+                <button
+                  onClick={() => router.push("/browse")}
+                  className="rounded-lg border border-white/10 px-4 py-2 text-sm text-zinc-400 hover:border-violet-500/50 hover:text-white transition-all"
+                >
+                  Clear filters
+                </button>
+                {["AI Prompts", "Templates", "Courses", "Design"].map((s) => (
+                  <button
+                    key={s}
+                    onClick={() => router.push(`/browse?search=${encodeURIComponent(s)}`)}
+                    className="rounded-lg border border-violet-500/30 bg-violet-500/10 px-4 py-2 text-sm text-violet-400 hover:bg-violet-500/20 transition-all"
+                  >
+                    {s}
+                  </button>
+                ))}
+              </div>
             </div>
           ) : (
             <ListingGrid listings={listings} />

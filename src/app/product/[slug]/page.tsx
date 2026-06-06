@@ -1,9 +1,11 @@
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
+import Link from "next/link";
 import { db } from "@/lib/db";
 import { getCategoryName } from "@/lib/categories";
 import { formatPrice, formatDate } from "@/lib/utils";
 import ProductActions from "./product-actions";
+import FaqAccordion from "./faq-accordion";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -42,6 +44,14 @@ export default async function ProductPage({ params }: Props) {
   });
 
   if (!listing) notFound();
+
+  // Fetch more from this seller
+  const moreFromSeller = await db.listing.findMany({
+    where: { sellerId: listing.seller.id, status: "PUBLISHED", slug: { not: listing.slug } },
+    orderBy: { totalSales: "desc" },
+    take: 4,
+    select: { id: true, title: true, slug: true, shortDesc: true, price: true, thumbnailUrl: true, category: true, avgRating: true, reviewCount: true, totalSales: true },
+  });
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">

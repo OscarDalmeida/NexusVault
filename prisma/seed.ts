@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
+import { generateProductIconUrl } from "../src/lib/icon-generator";
 
 const db = new PrismaClient();
 
@@ -35,6 +36,11 @@ async function main() {
       title: "Ultimate Budget Architect — ChatGPT Edition",
       slug: "ultimate-budget-architect-chatgpt",
       category: "ai-tools-prompts",
+      thumbnailUrl: generateProductIconUrl(
+        "Ultimate Budget Architect — ChatGPT Edition",
+        "Transform ChatGPT into a personal finance wizard that builds interactive spreadsheet budgets with visual charts, automated calculations, and smart insights.",
+        "ai-tools-prompts"
+      ),
       shortDesc: "Transform ChatGPT into a personal finance wizard that builds interactive spreadsheet budgets with visual charts, automated calculations, and smart insights.",
       description: `# Ultimate Budget Architect — ChatGPT Edition
 
@@ -221,6 +227,11 @@ Begin now by greeting the user and starting Phase 1.`,
       title: "Ultimate Budget Architect — Claude Edition",
       slug: "ultimate-budget-architect-claude",
       category: "ai-tools-prompts",
+      thumbnailUrl: generateProductIconUrl(
+        "Ultimate Budget Architect — Claude Edition",
+        "Harness Claude's analytical power to create beautifully structured budget spreadsheets with deep financial analysis, artifact outputs, and scenario modeling.",
+        "ai-tools-prompts"
+      ),
       shortDesc: "Harness Claude's analytical power to create beautifully structured budget spreadsheets with deep financial analysis, artifact outputs, and scenario modeling.",
       description: `# Ultimate Budget Architect — Claude Edition
 
@@ -451,6 +462,11 @@ Begin now. Start with Phase 1 and warmly greet the user.`,
       title: "Budget Mastery Bundle — ChatGPT + Claude",
       slug: "budget-mastery-bundle-chatgpt-claude",
       category: "ai-tools-prompts",
+      thumbnailUrl: generateProductIconUrl(
+        "Budget Mastery Bundle — ChatGPT + Claude",
+        "Get BOTH budget architect prompts at a discount. Use ChatGPT for quick budgets and Claude for deep financial analysis. Includes bonus: Investment Portfolio Analyzer prompt.",
+        "ai-tools-prompts"
+      ),
       shortDesc: "Get BOTH budget architect prompts at a discount. Use ChatGPT for quick budgets and Claude for deep financial analysis. Includes bonus: Investment Portfolio Analyzer prompt.",
       description: `# Budget Mastery Bundle — ChatGPT + Claude
 

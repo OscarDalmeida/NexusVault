@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { getAuth } from "@/lib/auth";
 import { listingSchema } from "@/lib/validations";
+import { generateProductIconUrl } from "@/lib/icon-generator";
 
 export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -50,10 +51,18 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
 
     await db.deliveryItem.deleteMany({ where: { listingId: id } });
 
+    // Regenerate unique product icon based on updated content
+    const thumbnailUrl = generateProductIconUrl(
+      listingData.title,
+      listingData.shortDesc || listingData.description || "",
+      listingData.category
+    );
+
     const updated = await db.listing.update({
       where: { id },
       data: {
         ...listingData,
+        thumbnailUrl,
         deliveryItems: {
           create: deliveryItems.map((item) => ({
             type: item.type,
